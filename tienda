@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintege Clothes by Ron</title>
+    <style>
+        /* ESTILOS GENERALES (CSS) */
+        :root {
+            --primary: #2c2c2c;
+            --accent: #d4a373;
+            --bg: #fdfcf5;
+            --white: #ffffff;
+            --text: #333333;
+            --danger: #e74c3c;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            position: relative;
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+        }
+
+        /* VISTAS (PÁGINAS) */
+        .view-section {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        /* MISSION & VISION */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-box h2 {
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* SHOP SECTION */
+        .shop-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .product-price {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background-color: var(--accent);
+        }
+
+        /* --- ESTILOS PÁGINA DE CONTACTO --- */
+        .contact-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            box-sizing: border-box; /* Para que el padding no rompa el ancho */
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background-color: #b58b61;
+        }
+
+        .contact-info-box {
+            padding: 20px;
+        }
+
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            border: 0;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: #888;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        /* MODAL CARRITO & PAGO */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .cart-item-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        
+        .remove-btn:hover { transform: scale(1.1); }
+
+        .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #eee;
+        }
+
+        .checkout-btn {
+            background-color: var(--accent);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            margin-top: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .payment-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid var(--accent);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .bank-details p {
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .instruction-highlight {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="switchPage('home')">VINTEGE CLOTHES BY RON</div>
+        <nav>
+            <a onclick="switchPage('home')">Inicio</a>
+            <a onclick="switchPage('home')">Tienda</a>
+            <a onclick="switchPage('contact')">Contacto</a>
+        </nav>
+        <div class="cart-icon" onclick="openCart()">
+            🛒 <span id="cart-count" class="cart-count">0</span>
+        </div>
+    </header>
+
+    <div id="home-view" class="view-section">
+        <section class="hero">
+            <h1>Estilo Atemporal</h1>
+            <p>Curaduría exclusiva de ropa vintage en San Luis Potosí</p>
+        </section>
+
+        <section class="about-section">
+            <div class="about-box">
+                <h2>Nuestra Misión</h2>
+                <p>Darle una segunda vida a prendas icónicas, promoviendo la moda sostenible y ofreciendo piezas de calidad que cuentan una historia única para quienes buscan autenticidad.</p>
+            </div>
+            <div class="about-box">
+                <h2>Nuestra Visión</h2>
+                <p>Ser la referencia número uno en San Luis Potosí de ropa vintage y streetwear, creando una comunidad apasionada por el estilo clásico y la cultura del reúso.</p>
+            </div>
+        </section>
+
+        <section class="shop-container">
+            <h2 class="section-title">Nuevos Ingresos</h2>
+            <div class="products-grid">
+                
+                <div class="product-card">
+                    <img src="Cargo-2.webp" alt="Pantalón Carhartt" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Pantalón Carhartt Cargo Double Knee</h3>
+                        <p class="product-description">Vintage, corte relajado, color olivo deslavado. Ideal para uso rudo.</p>
+                        <div class="product-price">$850.00 MXN</div>
+                        <button class="add-btn" onclick="addToCart('Pantalón Carhartt Cargo', 850)">Agregar al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="D_NQ_NP_820543-MLM81894039290_012025-O.webp" alt="Camisa Carhartt Verde" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Camisa Carhartt Workwear Verde</h3>
+                        <p class="product-description">Camisa de trabajo vintage, color verde olivo oscuro, tela resistente de algodón. Corte amplio con doble bolsillo.</p>
+                        <div class="product-price">$650.00 MXN</div>
+                        <button class="add-btn" onclick="addToCart('Camisa Carhartt Verde', 650)">Agregar al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="s-l1200.jpg" alt="Gorra Carhartt" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Gorra Carhartt Canvas</h3>
+                        <p class="product-description">Color mostaza clásico (Hamilton Brown). Ajustable y resistente.</p>
+                        <div class="product-price">$350.00 MXN</div>
+                        <button class="add-btn" onclick="addToCart('Gorra Carhartt', 350)">Agregar al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="004BD198-23F0-4C32-8CAF-64CEF8C97C22.webp" alt="Chamarra Carhartt Reworked" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Chamarra Carhartt Reworked</h3>
+                        <p class="product-description">Diseño colorblock único (Verde/Tan/Café). Pieza de colección custom.</p>
+                        <div class="product-price">$1,800.00 MXN</div>
+                        <button class="add-btn" onclick="addToCart('Chamarra Carhartt Reworked', 1800)">Agregar al Carrito</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <div id="contact-view" class="view-section" style="display: none;">
+        <section class="hero" style="background-color: var(--accent);">
+            <h1>Contáctanos</h1>
+            <p>Estamos listos para resolver tus dudas</p>
+        </section>
+
+        <div class="contact-container">
+            <div class="contact-form-box">
+                <h2 style="margin-top: 0;">Envíanos un mensaje</h2>
+                <form onsubmit="sendContact(event)">
+                    <div class="form-group">
+                        <label for="name">Nombre Completo:</label>
+                        <input type="text" id="name" placeholder="Tu nombre..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" id="email" placeholder="tu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensaje:</label>
+                        <textarea id="message" placeholder="¿Tienes dudas sobre tallas o envíos?" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                </form>
+            </div>
+
+            <div class="contact-info-box">
+                <h2>Ubicación Física</h2>
+                <p>Ven a probarte las prendas en nuestro showroom.</p>
+                <p><strong>Dirección:</strong><br>
+                Azabache 1966, Fracc. Industrias<br>
+                San Luis Potosí, SLP, México.</p>
+                
+                <p><strong>Horario:</strong><br>
+                Lunes a Sábado: 10:00 AM - 7:00 PM</p>
+
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3695.762968393856!2d-100.9575913239611!3d22.13524667980598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842aa1f63e52838d%3A0x8670404093f4784a!2sC.%20Azabache%201966%2C%20Industrias%2C%2078395%20San%20Luis%20Potos%C3%AD%2C%20S.L.P.!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Vintege Clothes by Ron. Todos los derechos reservados.</p>
+    </footer>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">×</span>
+            <h2>Tu Carrito</h2>
+            <div id="cart-items">
+                </div>
+            <div class="total">Total: $<span id="cart-total">0</span> MXN</div>
+            
+            <button class="checkout-btn" onclick="showPayment()">Proceder al Pago</button>
+
+            <div id="payment-details" class="payment-info">
+                <h3>Datos de Transferencia</h3>
+                <p>Realiza tu pago a la siguiente cuenta y envía tu <span class="instruction-highlight">comprobante junto con tu dirección de entrega</span>:</p>
+                <div class="bank-details">
+                    <p><strong>Banco:</strong> Openbank (STP)</p>
+                    <p><strong>Beneficiario:</strong> Ruben A. Ronzón Díaz</p>
+                    <p><strong>CLABE:</strong> XXXXXXXXXXXXXXX</p>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">*Tus productos serán apartados por 24 horas.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- NAVEGACIÓN ENTRE PÁGINAS ---
+        function switchPage(pageName) {
+            const homeView = document.getElementById('home-view');
+            const contactView = document.getElementById('contact-view');
+            
+            if (pageName === 'contact') {
+                homeView.style.display = 'none';
+                contactView.style.display = 'block';
+            } else {
+                homeView.style.display = 'block';
+                contactView.style.display = 'none';
+            }
+            // Scroll hacia arriba al cambiar
+            window.scrollTo(0, 0);
+        }
+
+        function sendContact(e) {
+            e.preventDefault(); // Evita que se recargue la página
+            const nombre = document.getElementById('name').value;
+            alert("¡Gracias " + nombre + "! Hemos recibido tu mensaje. Te contactaremos pronto.");
+            // Aquí se limpiaría el formulario
+            document.querySelector('form').reset();
+        }
+
+        // --- LÓGICA DEL CARRITO ---
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartCount();
+            alert("¡" + name + " agregado al carrito!");
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            openCart();
+        }
+
+        function updateCartCount() {
+            const countElement = document.getElementById('cart-count');
+            countElement.textContent = cart.length;
+        }
+
+        function openCart() {
+            const modal = document.getElementById('cartModal');
+            const itemsContainer = document.getElementById('cart-items');
+            const totalElement = document.getElementById('cart-total');
+            
+            itemsContainer.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    itemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <span>${item.name}</span>
+                            <div class="cart-item-details">
+                                <span>$${item.price}</span>
+                                <button class="remove-btn" onclick="removeFromCart(${index})" title="Eliminar producto">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            totalElement.textContent = total;
+            document.getElementById('payment-details').style.display = 'none';
+            modal.style.display = "block";
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = "none";
+        }
+
+        function showPayment() {
+            if(cart.length === 0) {
+                alert("Agrega productos primero.");
+                return;
+            }
+            const paymentDiv = document.getElementById('payment-details');
+            paymentDiv.style.display = "block";
+            paymentDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target == modal) {
+                closeCart();
+            }
+        }
+    </script>
+</body>
+</html>
